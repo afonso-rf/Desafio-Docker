@@ -1,0 +1,84 @@
+version: "3.7"
+networks:
+  frontend:
+    name: forntend_net
+    driver: bridge
+  review_back:
+    name: review_net
+    driver: bridge
+  movie_back:
+    name: movie_back
+    driver: bridge
+
+volumes:
+  mongo_movie_vol:
+    name: mongo_movie_vol
+  postgres_review_vol:
+    name: postgres_review_vol
+
+services:
+  movie-rotten:
+    image: ${IMAGE_MOVIE_ROTTEN:-movie-rotten}:${MOVIE_TAG:-latest}
+    build:
+      context: ./movie/
+      dockerfile: ./Dockerfile
+    container_name: movie-rotten
+    networks:
+      - frontend
+      - movie_back
+    depends_on: 
+      - mongodb
+    environment:
+      MONGODB_URI: "mongodb://${MONGO_DB_USERNAME:-mongo}:${MONGO_DB_PASSWORD:-mongo}@mongodb:27017/admin"
+  mongodb:
+    image: mongo:${MONGO_TAG:-4.4.12}
+    container_name: mongo_db
+    networks:
+      - movie_back
+    volumes:
+      - mongo_movie_vol:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_DB_USERNAME:-mongo}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_DB_PASSWORD:-mongo}
+  
+  review-rotten:
+    image: $IMAGE_REVIEW_ROTTEN:-review-rotten}:${REVIEW_TAG:-latest}
+    build:
+      context: ./review/
+      dockerfile: ./Dockerfile
+    container_name: review-rotten
+    networks:
+      - frontend
+      - review_back
+    depends_on:
+      - postgres
+    environment:
+      ConnectionStrings__MyConnection: Host=postgres;Database=${POSTGRES_DB_USERNAME:-postgres};Username=${POSTGRES_DB_USERNAME:-postgres};Password=${POSTGRES_DB_PASSWORD:-postgres};
+  postgres:
+    image: postgres:${POSTGRES_TAG:-latest}
+    container_name: postgres_review
+    networks:
+      - review_back
+    volumes:
+      - postgres_review_vol:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${POSTGRES_DB_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_DB_PASSWORD:-postgres} 
+  
+  rotten-potatoes-ms:
+    image: ${IMAGE_ROTTEN:-rotten-potatoes-ms}:${ROTTEN_TAG:-latest}
+    build:
+      context: ./rotten-potatoes-ms/
+      dockerfile: ./Dockerfile
+    container_name: rotten-potatoes-ms
+    networks:
+      - frontend
+    ports:
+      - "5000:5000"
+    depends_on:
+      - movie-rotten
+      - review-rotten
+    environment:
+      MOVIE_SERVICE_URI: http://movie-rotten:8181
+      REVIEW_SERVICE_URI: http://review-rotten:80
+    
