@@ -1,0 +1,42 @@
+version: "3.7"
+networks:
+  backend:
+    name: back_wordpress
+    driver: bridge
+volumes:
+  mariadb_vol:
+    name: mariadb_vol
+  wordpress_vol:
+    name: wordpress_vol
+
+services:
+  wordpress:
+    image: wordpress:${IMAGE_WP_TAG:-latest} 
+    container_name: wordpress
+    networks:
+      - backend
+    volumes:
+      - wordpress_vol:/var/www/html
+    depends_on:
+      - mariadb
+    environment:
+      WORDPRESS_DB_HOST: mariadb:3306
+      WORDPRESS_DB_USER: ${DB_USERNAME:-mariadbuser}
+      WORDPRESS_DB_PASSWORD: ${DB_PASSWORD:-mariadbpwd}
+      WORDPRESS_DB_NAME: ${DB_DATABASE:-wordpress}
+    ports:
+     - "8080:80"
+
+  mariadb:
+    image: mariadb:${IMAGE_DB_TAG:-latest}
+    container_name: maria_db
+    networks:
+      - backend
+    volumes:
+      - mariadb_vol:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-rootpwd}
+      MYSQL_USER: ${DB_USERNAME:-mariadbuser}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-mariadbpwd}
+      MYSQL_DATABASE: ${DB_DATABASE:-wordpress}
+      
