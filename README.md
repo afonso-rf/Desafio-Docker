@@ -8,6 +8,7 @@ quanto executar alguns comandos. Então agora tá na hora de você genhar com is
 também
 
 ---
+
 - __Questão 01__
 
 Execute os comandos para criar os 4 bancos de dados listados com containers, e use
@@ -20,6 +21,7 @@ que não vai perder os dados caso o container seja excluido).
    - Redis
 
 ---
+
 - __Questão 02__
 
 Certo, você conseguiu criar 4 bancos na sua máquina utilizando containers. Mas tem
@@ -34,6 +36,7 @@ de dados tem uma ferramenta administrativa com interface web que você pode usar
    - Redis ⇒ *redis-commander*
 
 ---
+
 - __Questão 03__
 
 Um dos fundamentos chave pra se trabalhar com container é a criação de imagens
@@ -57,14 +60,16 @@ Faça um fork de cada projeto para o seu GitHub e depois me envia aqui embaixo c
 um deles com a solução. (Não esquece de documentar no Readme).
 
 ---
+
 - __Questão 04__
 
 Agora que você já afiou o seu conhecimento sobre criação de imagens Docker, tá na
 hora de fazer o deploy de uma aplicação 100% em containers Docker. A aplicação está
-no [GitHub do KubeDev](https://github.com/KubeDev/rotten-potatoes) e __um detalhe MUITO importante__, a aplicação precisa ser toda
+no [GitHub do KubeDev](https://github.com/KubeDev/rotten-potatoes) e **um detalhe MUITO importante**, a aplicação precisa ser toda
 criada com apenas uma linha de comando.
 
 ---
+
 - __Questão 05__
 
 Chegou um cliente pra você que possui todas as suas aplicações em data centers e a
@@ -75,6 +80,7 @@ conteúdos da empresa construido em Wordpress. Então hoje sua missão é criar 
 ambiente wordpress pronto para a equipe de publicidade começar a popular.
 
 ---
+
 - __Questão 06__
 
 Agora vamos aumentar mais a complexidade das coisas, chegou a hora de executar
@@ -88,6 +94,7 @@ Essa aplicação é formada por 3 repositórios:
 Montar o ambiente com Docker compose baseado em arquivos de enviroment
 
 ---
+
 - __Questão 07__
 
 Agora que você concluiu, tão importante quanto executar, é documentar. Então crie
@@ -95,4 +102,4 @@ anotações sobre cada questão, detalhe as tomadas de decisão e processo de
 construção.
 
 E pra ficar melhor ainda, crie posts no Linkedin sobre o processo e não se esquece de
-me marcar e colocar a nossa __#rumoaelite__ !!!!
+me marcar e colocar a nossa ***#rumoaelite*** !!!!
