@@ -1,4 +1,6 @@
-![image](img/kubdev.png)
+<div align="center">
+<img height="70px" src="img/kubdev.png">
+</div>
 
 # KubeDev - Desafio de Docker
 
